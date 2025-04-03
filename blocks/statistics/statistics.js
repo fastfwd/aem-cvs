@@ -80,7 +80,7 @@ export default function decorate(block) {
         // Parse as integer, with error handling
         const targetValue = parseInt(numberText, 10);
 
-        if (Number.isNaN(targetValue)) {
+        if (!Number.isNaN(targetValue)) {
           number.dataset.target = targetValue;
         } else {
           number.dataset.target = 0;
