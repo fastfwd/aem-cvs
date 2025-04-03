@@ -47,12 +47,10 @@ export default function decorate(block) {
   gridContainer.classList.add('statistics-grid');
 
   // Analyze structure to determine if we have a Google Docs table format
-  // In Google Docs table format, we expect row 2 to have numbers and row 3 to have labels
   const rows = Array.from(block.children);
 
   // Check if we're working with a Google Docs table format
   if (rows.length >= 3) {
-    // Assuming row 1 is already processed as heading
     // Row 2 should contain the numbers
     const numberRow = rows[1];
     // Row 3 should contain the labels
@@ -77,9 +75,9 @@ export default function decorate(block) {
 
         // Get the number value, removing any commas
         const numberText = numberCells[i].textContent.trim().replace(/,/g, '');
-        // Parse as integer, with error handling
         const targetValue = parseInt(numberText, 10);
 
+        // Make sure targetValue is a valid number
         if (!Number.isNaN(targetValue)) {
           number.dataset.target = targetValue;
         } else {
@@ -97,36 +95,6 @@ export default function decorate(block) {
       // Remove the processed rows
       block.removeChild(numberRow);
       block.removeChild(labelRow);
-    }
-  } else {
-    // Fallback to original processing logic for non-table format
-    const children = Array.from(block.children);
-    for (let i = 1; i < children.length; i += 1) {
-      const child = children[i];
-      const cells = Array.from(child.children);
-
-      if (cells.length >= 2) {
-        const statItem = document.createElement('div');
-        statItem.classList.add('statistics-item');
-
-        const number = document.createElement('div');
-        number.classList.add('statistics-number');
-        number.textContent = '0'; // Start at 0 for animation
-
-        const label = document.createElement('div');
-        label.classList.add('statistics-label');
-        label.textContent = cells[1].textContent.trim();
-
-        statItem.appendChild(number);
-        statItem.appendChild(label);
-        gridContainer.appendChild(statItem);
-
-        // Store the target value for animation
-        const targetValue = parseInt(cells[0].textContent.replace(/,/g, ''), 10);
-        number.dataset.target = targetValue;
-      }
-
-      block.removeChild(child);
     }
   }
 
