@@ -28,9 +28,6 @@ function animateNumber(element, target, duration = 2000) {
    * @param {Element} block - The statistics block element
    */
 export default function decorate(block) {
-  // Add debugging to see the structure
-  console.log('Block structure:', block.innerHTML);
-
   // Add classes to the block
   block.classList.add('statistics-wrapper');
 
@@ -67,7 +64,7 @@ export default function decorate(block) {
 
       // Process each column
       const columnCount = Math.min(numberCells.length, labelCells.length);
-      for (let i = 0; i < columnCount; i++) {
+      for (let i = 0; i < columnCount; i += 1) {
         const statItem = document.createElement('div');
         statItem.classList.add('statistics-item');
 
@@ -83,10 +80,9 @@ export default function decorate(block) {
         // Parse as integer, with error handling
         const targetValue = parseInt(numberText, 10);
 
-        if (!isNaN(targetValue)) {
+        if (Number.isNaN(targetValue)) {
           number.dataset.target = targetValue;
         } else {
-          console.error('Invalid number:', numberText);
           number.dataset.target = 0;
         }
 
@@ -105,7 +101,7 @@ export default function decorate(block) {
   } else {
     // Fallback to original processing logic for non-table format
     const children = Array.from(block.children);
-    for (let i = 1; i < children.length; i++) {
+    for (let i = 1; i < children.length; i += 1) {
       const child = children[i];
       const cells = Array.from(child.children);
 
