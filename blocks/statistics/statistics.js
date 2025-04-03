@@ -33,7 +33,7 @@ export default function decorate(block) {
 
   // Get the first div as the heading (from merged cell)
   if (block.children.length > 0) {
-    const headingDiv = block.children[1];
+    const headingDiv = block.children[0];
     if (headingDiv.textContent.trim()) {
       const heading = document.createElement('h2');
       heading.classList.add('statistics-heading');
